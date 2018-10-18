@@ -1,0 +1,9 @@
+<div class="list-group">
+    {% for category in g.categories_menu.pages %}
+        {% if category.match(g.category_id) %}
+            <a class="list-group-item active" href="{{url_for('home.catalog_category', category_id=category.page)}}">{{category.caption}}</a>
+        {% else %}
+            <a class="list-group-item" href="{{url_for('home.catalog_category', category_id=category.page)}}">{{category.caption}}</a>
+        {% endif %}
+    {% endfor %}
+</div>

@@ -1,0 +1,63 @@
+{% extends 'base_admin.html'%}
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <div class="col col-xs-12">
+            <h2 class="text-center">{{title}}</h2>
+            <hr>
+            <form method="GET" action="{{url_for('admin.products')}}">
+                <div class="input-group">
+                    {{form.search}}
+                    <span class="input-group-btn">
+                        {{form.submit}}
+                    </span>
+                </div><!-- /input-group -->
+            </form>
+            <hr>
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-success fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{message}}
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <a href="{{url_for('admin.products_add')}}" class="btn btn-default">Добавить товар</a>
+            </div>
+            {% if products | length > 0 %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover ">
+                        <tr>
+                            <th class="text-center">Заголовок</th>
+                            <th class="text-center">Цена</th>
+                            <th class="text-center">Статус</th>
+                            <th class="text-center">Редактировать</th>
+                            <th class="text-center">Удалить</th>
+                        </tr>
+                        {% for item in products %}
+                            <tr>
+                                <td class="text-center">
+                                    {{item.title}}<br>
+                                </td>
+                                <td class="text-center">
+                                    {{item.cost|format_currency}}<br>
+                                </td>
+                                <td class="text-center">
+                                    {% if item.status %}Активен{% else %}Не активен{% endif %}<br>
+                                </td>
+                                <td class="text-center"><a href="{{url_for('admin.products_edit', product_id=item.id)}}">Редактировать</a></td>
+                                <td class="text-center"><a href="{{url_for('admin.products_delete', product_id=item.id)}}">Удалить</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div> <!-- .table-responsive-->
+                <div class="text-center">
+                    {{pagination | safe}}
+                </div>
+            {% else %}
+                <p>Нет товаров</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block scripts %}
+    {{super()}}
+    <script src="{{url_for('static', filename='js/add_to_cart.js')}}"></script>
+{% endblock %}
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <div class="col col-xs-3">
+            {% include 'includes/menu-catalog.html' %}
+        </div>
+        <div class="col col-xs-9">
+            <h2 class="text-center">{{title}}</h2>
+            <div class="row book">
+                <div class="col col-xs-3">
+                    {% if product.image %}
+                         <img src="{{url_for('static', filename="upload/"+product.image)}}" alt="{{product.title}}">
+                    {% else %}
+                         <img src="{{url_for('static', filename='images/booknocoverimage.jpg')}}" alt="{{product.title}}">
+                    {% endif %}
+                </div>
+                <div class="col col-xs-9">
+                    {{product.description|nl2br}}
+                    <div  class="text-right">
+                        <p>Цена: {{product.cost|format_currency}} рублей</p>
+                        <form method="POST" class="add_to_cart" action="{{url_for('home.cart_add')}}">
+                            {{form_add_to_cart.csrf_token}}
+                            {{form_add_to_cart.product_id(value=product.id)}}
+                            {{wtf.form_field(form_add_to_cart.submit)}}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-xs-12">
+                    <hr>
+                    <h2 class="text-center">Комментарии</h2>
+                    {% if current_user.is_authenticated %}
+                        {% for message in get_flashed_messages() %}
+                            <div class="alert alert-success fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                        {{wtf.quick_form(form, id="comments", action=request.path+"#comments")}}
+                    {% endif %}
+                    <hr>
+                    {% for comment in comments %}
+                        <div>
+                            <p><strong>{{comment.user.firstname}}</strong> {{comment.datetime_added|strftime('%d.%m.%Y %H:%M:%S')}}</p>
+                            <p>
+                                {{comment.text|nl2br}}
+                            </p>
+                        </div>
+                    {% else %}
+                        <p>Нет комментариев</p>
+                    {% endfor%}
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

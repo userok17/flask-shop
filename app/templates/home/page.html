@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <div class="col col-xs-3">
+            {% include 'includes/menu-catalog.html' %}
+        </div>
+        <div class="col col-xs-9">
+            <h2 class="text-center">{{title}}</h2>
+            {{page.text|nl2br}}
+            <hr>
+        </div>
+        
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base_admin.html'%}
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <div class="col col-xs-12">
+            <h2 class="text-center">{{title}}</h2>
+            <div class="row">
+                <div class="col col-xs-4">
+                    <h4>Общая статистика</h4>
+                    <p>Количество новостей: {{news_count}}</p>
+                    <p>Количество товаров: {{products_count}}</p>
+                    <p>Количество пользователей: {{buyers_count}}</p>
+                    <p>Количество заказов: {{orders_count}}</p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

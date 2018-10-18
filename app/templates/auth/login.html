@@ -1,0 +1,30 @@
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block content %}
+<section class="container">
+    <div class="row">
+        <div class="col col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+            <h2 class="text-center">{{title}}</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    {% if category == 'message' %}
+                        <div class="alert alert-warning fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{message}}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-{{category}} fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{message}}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endwith %}
+            
+            {{wtf.quick_form(form)}}
+
+            <p><a href="{{url_for('auth.reset')}}">Забыли пароль?</a></p>
+        </div>
+    </div>
+</section>
+{% endblock %}

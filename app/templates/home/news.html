@@ -1,0 +1,25 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <div class="col col-xs-3">
+            {% include 'includes/menu-catalog.html' %}
+        </div>
+        <div class="col col-xs-9">
+            <h2 class="text-center">{{title}}</h2>
+            {% for item in news %}
+                <h4>{{item.title}}</h4>
+                <p>{{item.date_added|strftime('%d.%m.%Y')}}</p>
+                <p>{{item.intro}}</p>
+                <p class="text-right"><a href="{{url_for('home.news_get', id=item.id)}}">Подробнее</a></p>
+            {% endfor %}
+            <hr>
+            <div class="text-center">
+                {{pagination | safe}}
+            </div>
+        </div>
+        
+    </div>
+</section>
+{% endblock %}

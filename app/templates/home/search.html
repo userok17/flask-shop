@@ -1,0 +1,64 @@
+{% extends 'base.html'%}
+
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block scripts %}
+    {{super()}}
+    <script src="{{url_for('static', filename='js/add_to_cart.js')}}"></script>
+{% endblock %}
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <div class="col col-xs-3">
+            {% include 'includes/menu-catalog.html' %}
+        </div>
+        <div class="col col-xs-9">
+            <h2 class="text-center">{{title}}</h2>
+            <p>По Вашему запросу всего найдено {{products | length}}:</p>
+            <hr />
+            <form method="GET" action="{{url_for('home.search')}}">
+                <div class="input-group">
+                    {{form.search}}
+                    <span class="input-group-btn">
+                        {{form.submit}}
+                    </span>
+                </div><!-- /input-group -->
+            </form>
+            <hr />
+            {% if products %}
+                {% for product in products %}
+                    <div class="row book">
+                        <div class="col col-xs-3">
+                            {% if product.image %}
+                                <img src="{{url_for('static', filename='upload/'+product.image)}}" alt="{{product.title}}">
+                            {% else %}
+                                <img src="{{url_for('static', filename='images/booknocoverimage.jpg')}}" alt="{{product.title}}">
+                            {% endif %}
+                            
+                        </div>
+                        <div class="col col-xs-9">
+                            <a href="{{url_for('home.product', product_id=product.id)}}"><h4>{{product.title}}</h4></a>
+                            {{product.description|nl2br}}
+                            <div  class="text-right">
+                            <p>Цена: {{product.cost|format_currency}} рублей</p>
+                            <form method="POST" class="add_to_cart" action="{{url_for('home.cart_add')}}">
+                                {{form_add_to_cart.csrf_token}}
+                                {{form_add_to_cart.product_id(value=product.id)}}
+                                {{wtf.form_field(form_add_to_cart.submit)}}
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                {% endfor %}
+                <div class="text-center">
+                    {{pagination | safe}}
+                </div>
+            {% else %}
+                <p>К сожалению, поиск по сайту не дал никаких результатов. Попробуйте изменить или сократить Ваш запрос.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

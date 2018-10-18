@@ -1,0 +1,43 @@
+{% extends 'base_admin.html'%}
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <div class="col col-xs-12">
+            <h2 class="text-center">{{title}}</h2>
+             <hr>
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-success fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{message}}
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <a href="{{url_for('admin.categories_add')}}" class="btn btn-default">Добавить Категорию</a>
+            </div>
+            {% if categories | length > 0 %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover ">
+                        <tr>
+                            <th class="text-center">Заголовок</th>
+                            <th class="text-center">Редактировать</th>
+                            <th class="text-center">Удалить</th>
+                        </tr>
+                        {% for item in categories %}
+                            <tr>
+                                <td class="text-center">
+                                    {{item.title}}<br>
+                                </td>
+                                <td class="text-center"><a href="{{url_for('admin.categories_edit', category_id=item.id)}}">Редактировать</a></td>
+                                <td class="text-center"><a href="{{url_for('admin.categories_delete', category_id=item.id)}}">Удалить</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div> <!-- .table-responsive-->
+            {% else %}
+                <p>Нет Категорий</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

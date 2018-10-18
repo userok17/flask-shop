@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <div class="col col-xs-3">
+            {% include 'includes/menu-catalog.html' %}
+        </div>
+        <div class="col col-xs-9">
+            <h2 class="text-center">{{title}}</h2>
+            <h3 class="text-center">Проверьте свои данные, прежде чем перейти к оплате.</h3>
+            <hr>
+            <p>Имя: {{current_user.firstname}}</p>
+            <p>Фамилия: {{current_user.lastname}}</p>
+            <p>Адрес: {{current_user.address}}</p>
+            <p>Стоимость заказа: {{total|float|format_currency}} руб.</p>
+            <p>Стоимость доставки: {{delivery.cost|float|format_currency}} руб.</p>
+            <p><a class="btn btn-default" href="{{url_for('home.payment1')}}">Оплатить</a></p>
+        </div>
+    </div>
+</section>
+{% endblock %}

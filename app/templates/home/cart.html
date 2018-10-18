@@ -1,0 +1,54 @@
+{% extends 'base.html'%}
+
+{% block scripts %}
+    {{super()}}
+    <script src="{{url_for('static', filename='js/add_to_cart.js')}}"></script>
+{% endblock %}
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <div class="col col-xs-3">
+            {% include 'includes/menu-catalog.html' %}
+        </div>
+        <div class="col col-xs-9">
+            <h2 class="text-center">{{title}}</h2>
+            {% if products_query | length > 0 %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover ">
+                        {% for item in products_query %}
+                            <tr>
+                                <td class="text-center">
+                                    <img class="img-cart" src="{{url_for('static', filename='upload/' + item.image)}}" alt="{{item.title}}">
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{url_for('home.product', product_id=item.id)}}">{{item.title}}</a>
+                                </td>
+                                <td class="text-center">
+                                    x&nbsp;{{products_loads[item.id|string]}}
+                                </td>
+                                <td class="text-center">
+                                    {{(products_loads[item.id|string] * item.cost)|format_currency}}
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{url_for('home.cart_delete', product_id=item.id)}}"><img src="{{url_for('static', filename='images/delete.png')}}" alt=""></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="5">
+                                <p class="text-right">Итого: {{request.cookies.get('total')|float|format_currency}} руб.</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div> <!-- .table-responsive-->
+                <p class="text-right">
+                    <a class="btn btn-default" href="{{url_for('home.cart_order')}}">Оформить заказ</a>
+                </p>
+            {% else %}
+                <p class="text-center">Ваша корзина пуста</p>    
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

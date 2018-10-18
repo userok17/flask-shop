@@ -1,0 +1,12 @@
+{% extends 'base_admin.html'%}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block content %}
+<section class="container">
+    <div class="row">
+        <div class="col col-xs-6 col-xs-offset-3">
+            <h2 class="text-center">{{title}}</h2>
+            {{wtf.quick_form(form, enctype="multipart/form-data")}}
+        </div>
+    </div>
+</section>
+{% endblock %}

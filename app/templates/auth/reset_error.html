@@ -1,0 +1,12 @@
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block content %}
+<section class="container">
+    <div class="row">
+        <div class="col col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+            <h2 class="text-center">{{title}}</h2>
+            <p>Ссылка на сброс пароля неверна. Для нового сброса пароля <a href="{{url_for('auth.reset')}}">перейдите по ссылке.</a></p>
+        </div>
+    </div>
+</section>
+{% endblock %}

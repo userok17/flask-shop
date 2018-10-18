@@ -1,0 +1,42 @@
+{% extends 'base_cabinet.html' %}
+
+{% block content%}
+<section class="container">
+    <div class="row">
+        <div class="col col-xs-12">
+            <h2 class="text-center">{{title}}</h2>
+             <hr>
+            {% if orders | length > 0 %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover ">
+                        <tr>
+                            <th class="text-center">Номер заказа</th>
+                            <th class="text-center">Дата</th>
+                            <th class="text-center">Доставка</th>
+                            <th class="text-center">Статус</th>
+                            <th class="text-center">Список товаров</th>
+                        </tr>
+                        {% for item in orders %}
+                            <tr>
+                                <td class="text-center">{{item.id}}</td>
+                                <td class="text-center">{{item.date_added|strftime('%d.%m.%Y')}}</td>
+                                <td class="text-center">{{item.delivery_title}}</td>
+                                <td class="text-center">
+                                  {% if item.status_pay %}
+                                    Оплачен
+                                  {% else %}
+                                    Не оплачен  
+                                  {% endif %}
+                                </td>
+                                <td class="text-center"><a href="{{url_for('cabinet.orders_items', order_id=item.id)}}">Просмотреть</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div> <!-- .table-responsive-->
+            {% else %}
+                <p>У Вас нет ни одного заказа</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

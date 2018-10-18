@@ -1,0 +1,42 @@
+{% extends 'base_cabinet.html' %}
+
+{% block content%}
+<section class="container">
+    <div class="row">
+        <div class="col col-xs-12">
+            <h2 class="text-center">{{title}}</h2>
+            <p>Дата: {{order.date_added|strftime('%d.%m.%Y')}}</p>
+            <p>Доставка: {{order.delivery_title}} {{order.delivery_cost|format_currency}} руб.</p>
+            
+            {% if order.status_pay %}
+                <p>Статус:  Оплачен</p>
+            {% else %}
+                <p>Статус: Не оплачен</p>
+                <p><a class="btn btn-default" href="{{url_for('cabinet.orders_payment', order_id=order.id)}}">Оплатить заказ</a></p>
+            {% endif %}</p>
+            
+            <hr>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover ">
+                    <tr>
+                        <th class="text-center">Наименование товара</th>
+                        <th class="text-center">Количество</th>
+                        <th class="text-center">Сумма</th>
+                    </tr>
+                    {% for item in order.order_items %}
+                        <tr>
+                            <td class="text-center">{{item.title}}</td>
+                            <td class="text-center">x{{item.count}}</td>
+                            <td class="text-center">{{item.total_sum()|format_currency}}</td>
+                        </tr>
+                    {% endfor %}
+                     <tr>
+                        <td colspan="2"></td>
+                        <td class="text-center">Итого: {{order.total_sum|format_currency}} руб.</td>
+                    </tr>
+                </table>
+            </div> <!-- .table-responsive-->
+        </div>
+    </div>
+</section>
+{% endblock %}

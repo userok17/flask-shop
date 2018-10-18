@@ -1,0 +1,13 @@
+{% extends 'base_cabinet.html' %}
+
+{% block content%}
+  <section class="container">
+    <div class="row">
+      <h2 class="text-center">Здравствуйте, {{current_user.firstname}}!</h2>
+      <h3><a href="{{url_for('cabinet.orders')}}">Мои заказы</a></h3>
+      <p>Просмотр и управление заказами. </p>
+      <h3><a href="{{url_for('cabinet.profile')}}">Мой профиль</a></h3>
+      <p>Обновление контактной информации. </p>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% from 'macros/radiobuttons.html' import radio_fields %}
+
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <div class="col col-xs-3">
+            {% include 'includes/menu-catalog.html' %}
+        </div>
+        <div class="col col-xs-9">
+            <h2 class="text-center">{{title}}</h2>
+            <form method="POST" action="">
+                <h4>Способ оплаты:</h4>
+                {{form.csrf_token}}
+                {{radio_fields(form.delivery, delivery)}}
+                <h4>Контактная информация:</h4>
+                {{wtf.form_field(form.firstname)}}
+                {{wtf.form_field(form.lastname)}}
+                {{wtf.form_field(form.address)}}
+                {{wtf.form_field(form.submit)}}
+                
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

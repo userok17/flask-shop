@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	  <title>Восстановление пароля</title>
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   </head>
+   <body>
+
+   <p>Здравствуйте, {{user.firstname}}.</p>
+	<p>Для сброса Вашего пароля {{request.headers['HOST']}} перейдите по ссылке.</p>
+   <p><a href="{{ url_for('auth.reset_with_token', token=token, _external=True) }}">{{ url_for('auth.reset_with_token', token=token, _external=True) }}</a>.</p>
+   <p>Данное письмо отправлено почтовым роботом сервера {{request.headers['Host']}} и не требует ответа. © Все права защищены. {{ request.headers['Host'] }}.</p>
+
+   </body>
+</html>

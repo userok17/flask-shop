@@ -1,0 +1,15 @@
+{% macro radio_fields(fields, model) %}
+    {% for subfield in fields %}
+        <div class="radio">
+            <label>
+                {{subfield}} <strong>{{subfield.label.text}} {{model[loop.index0].cost|format_currency}} руб.</strong>
+            </label>
+        </div>
+        <p>{{model[loop.index0].description}}</p>
+        <hr>
+    {% endfor %}
+    {% if fields.errors %}
+        <p class="error">{{fields.errors[0]}}</p>
+        <hr>
+    {% endif %}
+{% endmacro %}

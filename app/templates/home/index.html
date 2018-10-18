@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<section class="container">
+    <div class="row">
+        <div class="col col-xs-3">
+            {% include 'includes/menu-catalog.html' %}
+        </div>
+        <div class="col col-xs-6">
+            <h2>{{about.title}}</h2>
+            {{about.text|nl2br}}
+            <hr>
+            <h2>Поиск по каталогу</h2>
+            <form method="GET" action="{{url_for('home.search')}}">
+                <div class="input-group">
+                    {{form.search}}
+                    <span class="input-group-btn">
+                        {{form.submit}}
+                    </span>
+                </div><!-- /input-group -->
+            </form>
+            <hr>
+            {% if products %}
+                <h2>Лучшие товары</h2>
+                <div class="row books">
+                    {% for product in products %}
+                        <div class="col col-xs-4 best-book">
+                            <a href="{{url_for('home.product', product_id=product.id)}}"><img src="{{url_for('static', filename='upload/'+product.image)}}" alt=""></a>
+                            <p><a href="{{url_for('home.product', product_id=product.id)}}">{{product.title}}</a></p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+        </div> <!--./books-->
+        <div class="col col-xs-3 news nopadding">
+            <h4 class="text-center">Новости</h4>
+            {% for item in news_widget %}
+                <h5>{{item.title}}</h5>
+                <p>{{item.intro}}</p>
+                <p class="text-right"><a href="{{url_for('home.news_get', id=item.id)}}">Подробнее</a></p>
+                <hr>
+            {% endfor %}
+            <p class="text-right"><a href="{{url_for('home.news')}}">Все новости</a></p>
+        </div><!--./col-xs-3 -->
+        
+    </div>
+</section>
+{% endblock %}
